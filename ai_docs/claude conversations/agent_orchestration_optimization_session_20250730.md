@@ -123,7 +123,7 @@ Rather than creating a separate orchestration framework, safeguards were embedde
 │   ├── promptrefiner-agent.md
 │   ├── blender-agent.md
 │   └── retrospectivecritic-agent.md
-├── ai docs/
+├── ai_docs/
 │   ├── claude conversations/          # This file location
 │   ├── original agent descriptions/   # Reference materials
 │   └── tests/                        # Test documentation

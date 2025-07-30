@@ -4,7 +4,8 @@
 
 A multi-agent system design for Claude Code that orchestrates 11 specialized AI agents with embedded loop prevention and intelligent workflow management.
 
-![System Architecture](.claude/agents/prompt_blueprint_architecture.png)
+![Prompt Agent Flowchart](./ai_docs/PromptAgentFlowchart.png)
+
 
 ## System Overview
 
@@ -56,6 +57,8 @@ Agent Configuration:
     - high: "Deep optimization, full safeguard validation"
 ```
 
+*Note: This YAML represents the configuration structure embedded within each agent's markdown frontmatter for orchestration control.*
+
 Each agent includes YAML frontmatter and orchestration status outputs for pipeline coordination.
 
 ## Validation & Testing
@@ -67,9 +70,9 @@ Each agent includes YAML frontmatter and orchestration status outputs for pipeli
 - Diminishing returns detection
 - User decision point validation
 
-**Test Location:** `ai docs/tests/`
+**Test Location:** `ai_docs/tests/`
 - `orchestration_safeguards_test_plan.md` - Test scenarios and methodology
-- `orchestration_safeguards_test_execution_20250730_144429.md` - Validation results
+- `orchestration_safeguards_test_execution_20250730_144429.md` - Validation results (100% pass rate)
 
 ## Maintenance Considerations
 
@@ -93,9 +96,9 @@ Each agent includes YAML frontmatter and orchestration status outputs for pipeli
 ## Development Workflow
 
 1. **Agent Definition Updates:** Update `.claude/agents/*.md` with orchestration preserved
-2. **Testing:** Review and execute scenarios in `ai docs/tests/orchestration_safeguards_test_plan.md`
+2. **Testing:** Review and execute scenarios in `ai_docs/tests/orchestration_safeguards_test_plan.md`
 3. **Validation:** Verify safeguard effectiveness using test methodology
-4. **Documentation:** Update conversation logs in `ai docs/claude conversations/`
+4. **Documentation:** Update conversation logs in `ai_docs/claude_conversations/`
 
 ## Next Development Steps
 
@@ -132,13 +135,13 @@ Each agent includes YAML frontmatter and orchestration status outputs for pipeli
 ### Implementation Notes
 - Agent definitions are located in `.claude/agents/`
 - Each agent includes orchestration awareness metadata
-- Testing methodology documented in `ai docs/tests/`
-- Conversation logs maintained in `ai docs/claude conversations/`
+- Testing methodology documented in `ai_docs/tests/`
+- Conversation logs maintained in `ai_docs/claude_conversations/`
 
 ### Getting Started
 1. Review agent definitions in `.claude/agents/`
 2. Understand orchestration safeguards in each agent
-3. Examine test scenarios in `ai docs/tests/orchestration_safeguards_test_plan.md`
+3. Examine test scenarios in `ai_docs/tests/orchestration_safeguards_test_plan.md`
 4. Reference validation results in test execution logs
 
 **System Status:** Functional multi-agent orchestration system with validated safeguards and checkpoint workflow management.
@@ -150,10 +153,21 @@ Each agent includes YAML frontmatter and orchestration status outputs for pipeli
 The system includes a comprehensive checkpoint command that follows a 6-step process for project state management:
 
 1. **Compact Claude Conversation Context** - Use Claude Code's conversation compacting feature
-2. **Save Claude Conversation Context** - Archive conversation to `./ai docs/claude conversations/` with descriptive filename and timestamp
+2. **Save Claude Conversation Context** - Archive conversation to `./ai_docs/claude_conversations/` with descriptive filename and timestamp
 3. **Update Claude Memory** - Refresh CLAUDE.md with current project snapshot
 4. **Update README.md** - Ensure documentation reflects current state with B+ quality standards
 5. **Stage and Commit** - Git commit recent changes with appropriate message
 6. **Summarize Checkpoint** - Provide execution summary with strengths and improvement opportunities
 
-**Usage:** Invoke the checkpoint command through Claude Code's custom command system to maintain project state consistency and documentation quality.
+**Usage Examples:**
+```bash
+# Basic checkpoint after significant changes
+@checkpoint
+
+# Checkpoint with specific focus
+@checkpoint "README optimization and testing validation"
+```
+
+**Command Location:** `.claude/commands/checkpoint.md`
+
+Invoke the checkpoint command through Claude Code's custom command system to maintain project state consistency and documentation quality. The command automatically handles conversation archiving, documentation updates, and git commits with appropriate messages.
