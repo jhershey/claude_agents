@@ -150,14 +150,15 @@ Each agent includes YAML frontmatter and orchestration status outputs for pipeli
 
 ### Checkpoint Workflow
 
-The system includes a comprehensive checkpoint command that follows a 6-step process for project state management:
+The system includes a comprehensive checkpoint command that follows a 7-step process for project state management:
 
 1. **Compact Claude Conversation Context** - Use Claude Code's conversation compacting feature
-2. **Save Claude Conversation Context** - Archive conversation to `./ai_docs/claude_conversations/` with descriptive filename and timestamp
-3. **Update Claude Memory** - Refresh CLAUDE.md with current project snapshot
-4. **Update README.md** - Ensure documentation reflects current state with B+ quality standards
-5. **Stage and Commit** - Git commit recent changes with appropriate message
-6. **Summarize Checkpoint** - Provide execution summary with strengths and improvement opportunities
+2. **Save Claude Conversation Context File** - Archive conversation to `./ai_docs/claude_conversations/` with accurate timestamp
+3. **Apply Claude Conversation Context File Retention Policy** - Manage file storage (keep last 7 days OR 5 most recent files)
+4. **Update Claude Memory** - Refresh CLAUDE.md with current project snapshot
+5. **Update README.md** - Ensure documentation reflects current state with B+ quality standards
+6. **Stage and Commit** - Git commit recent changes with appropriate message
+7. **Summarize Checkpoint** - Provide execution summary with strengths and improvement opportunities
 
 **Usage Examples:**
 ```bash
