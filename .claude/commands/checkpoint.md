@@ -101,7 +101,33 @@ If any step has an error or fails, immediately:
 
 7. **Summarize Checkpoint.** Make a concise summary of what was done for this particular checkpoint command execution. Call out any particular strengths or opportunities for improvement to this checkpoint command based on the outcome from the current execution.
 
-## Future Enhancements
+8. **Review and Update GitHub Issues.** Analyze recent changes against open GitHub issues for potential resolution:
+   - Use WebFetch to retrieve current open issues from the repository
+   - Extract repository URL from git remote to construct issue links
+   - **IMPORTANT: Only analyze against the open issues returned by WebFetch - ignore any closed/resolved issues**
+   - Compare commit messages, changed files, and implemented features against **only the open issue descriptions**
+   - Identify potential matches using keyword analysis and logical inference
+   - Present findings to user with emoji indicators, confidence levels, and direct links:
+     * **HIGH CONFIDENCE MATCHES**
+       - ✅ High confidence: Issue #11 'claude conversation file saved with wrong datetime stamp' appears resolved by timestamp implementation → https://github.com/jhershey/claude_agents/issues/11
+     * **POSSIBLE MATCHES**  
+       - ⚠️ Possible match: Issue #3 'add hooks with apple system sounds' may be completed by .claude/settings.json changes → https://github.com/jhershey/claude_agents/issues/3
+     * **UNCLEAR/NEEDS CLARIFICATION**
+       - ❌ Unclear: Issue #12 'user yaml errors on agent.md's' needs clearer acceptance criteria → https://github.com/jhershey/claude_agents/issues/12
+   - **Manual Resolution:** User clicks links to review and manually close/update issues on GitHub
+   - **No Automation:** This step only identifies potential matches for manual action
+
+## Risks
+
+### Performance Scaling (Step 8: GitHub Issue Analysis)
+* **WebFetch Latency Growth:** As open issues increase, WebFetch pagination will slow down Step 8 execution
+* **Current Performance:** 13 open issues = ~3-5 seconds total
+* **Projected Timeline:** 15+ second execution time in ~10-12 months at current issue creation rate (~0.4 issues/day)
+* **Bottleneck:** GitHub web interface pagination, not analysis logic
+* **Mitigation Options:** Filter by labels, time-based filtering, or upgrade to gh CLI for API access
+* **Monitoring:** Watch for 6+ second execution times as early warning (25+ open issues)
+
+## Possible Enhancements
 * Cost Tracking:  Use ccusage command to calculate model usage and cost since last checkpoint. Include this information in the checkpoint summary.
 * Improvement Metrics:  Create metrics to show improvements since last checkpoint.  Don't know what to measure across checkpoints yet.
 * Parallel Processing: Some steps (like CLAUDE.md and README.md updates) could potentially run concurrently
@@ -111,3 +137,4 @@ If any step has an error or fails, immediately:
 * Quality Metrics: Add quantitative measurement of documentation improvements
 * Validation Automation: Could include automated link checking and path validation
 * Template Integration: Standardized templates for conversation summaries
+* GitHub CLI Integration: Install gh CLI for automated issue closing/commenting with commit traceability. Would enable: `gh issue close #11 --comment "Fixed by commit [hash]: implemented accurate timestamps"`. Currently deferred - WebFetch approach provides identification without additional dependencies.
