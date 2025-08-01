@@ -64,7 +64,7 @@ Each agent includes embedded orchestration awareness with:
 ## Custom Commands
 
 **Available Commands:**
-- `checkpoint.md` - Automated project checkpoint workflow with 8-step process including conversation saving, retention policy, documentation updates, git commits, and GitHub issue analysis
+- `checkpoint.md` - Automated project checkpoint workflow with 8-step process including conversation saving, retention policy, documentation updates, git commits, GitHub issue analysis, and comprehensive final summary
 
 ## Key Design Principles
 
@@ -79,10 +79,10 @@ Each agent includes embedded orchestration awareness with:
 **Documentation:** Professional-grade README.md and CLAUDE.md suitable for senior AI engineers  
 **Agent System:** 11 optimized agents with embedded orchestration awareness  
 **Testing:** Comprehensive safeguard validation with documented test results  
-**Commands:** Production-ready checkpoint workflow with comprehensive error handling and retention policy  
+**Commands:** Production-ready 8-step checkpoint workflow with GitHub issue analysis and optimized user experience  
 **Quality Assurance:** Critic-refiner pipeline proven effective for iterative improvement  
 **Directory Structure:** Fully consistent ai_docs/ naming throughout project files  
 **Integration:** Full Claude Code command system compatibility with YAML frontmatter  
 **Conversation Management:** Automated retention policy prevents unlimited file growth  
 **Error Handling:** Comprehensive git operation safeguards prevent silent failures  
-**Issue Management:** Automated analysis connecting code changes to GitHub issues for manual resolution
+**Issue Management:** WebFetch-based GitHub issue analysis with emoji indicators and direct links for efficient manual resolution

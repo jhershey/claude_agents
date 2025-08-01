@@ -99,9 +99,7 @@ If any step has an error or fails, immediately:
      * Preserve all file changes in their current state
      * Ask user for guidance on how to proceed
 
-7. **Summarize Checkpoint.** Make a concise summary of what was done for this particular checkpoint command execution. Call out any particular strengths or opportunities for improvement to this checkpoint command based on the outcome from the current execution.
-
-8. **Review and Update GitHub Issues.** Analyze recent changes against open GitHub issues for potential resolution:
+7. **Review and Update GitHub Issues.** Analyze recent changes against open GitHub issues for potential resolution:
    - Use WebFetch to retrieve current open issues from the repository
    - Extract repository URL from git remote to construct issue links
    - **IMPORTANT: Only analyze against the open issues returned by WebFetch - ignore any closed/resolved issues**
@@ -109,18 +107,23 @@ If any step has an error or fails, immediately:
    - Identify potential matches using keyword analysis and logical inference
    - Present findings to user with emoji indicators, confidence levels, and direct links:
      * **HIGH CONFIDENCE MATCHES**
-       - ✅ High confidence: Issue #11 'claude conversation file saved with wrong datetime stamp' appears resolved by timestamp implementation → https://github.com/jhershey/claude_agents/issues/11
+       - ✅ High confidence: Issue #11 'claude conversation file saved with wrong datetime stamp' appears resolved by timestamp implementation  
+         → https://github.com/jhershey/claude_agents/issues/11
      * **POSSIBLE MATCHES**  
-       - ⚠️ Possible match: Issue #3 'add hooks with apple system sounds' may be completed by .claude/settings.json changes → https://github.com/jhershey/claude_agents/issues/3
+       - ⚠️ Possible match: Issue #3 'add hooks with apple system sounds' may be completed by .claude/settings.json changes  
+         → https://github.com/jhershey/claude_agents/issues/3
      * **UNCLEAR/NEEDS CLARIFICATION**
-       - ❌ Unclear: Issue #12 'user yaml errors on agent.md's' needs clearer acceptance criteria → https://github.com/jhershey/claude_agents/issues/12
+       - ❌ Unclear: Issue #12 'user yaml errors on agent.md's' needs clearer acceptance criteria  
+         → https://github.com/jhershey/claude_agents/issues/12
    - **Manual Resolution:** User clicks links to review and manually close/update issues on GitHub
    - **No Automation:** This step only identifies potential matches for manual action
 
+8. **Summarize Checkpoint.** Make a comprehensive summary of what was accomplished in this checkpoint command execution, including both the traditional checkpoint activities (steps 1-6) and GitHub issue analysis findings (step 7). Call out any particular strengths or opportunities for improvement to this checkpoint command based on the outcome from the current execution. Include key GitHub issue insights and potential resolutions identified for immediate user action.
+
 ## Risks
 
-### Performance Scaling (Step 8: GitHub Issue Analysis)
-* **WebFetch Latency Growth:** As open issues increase, WebFetch pagination will slow down Step 8 execution
+### Performance Scaling (Step 7: GitHub Issue Analysis)
+* **WebFetch Latency Growth:** As open issues increase, WebFetch pagination will slow down Step 7 execution
 * **Current Performance:** 13 open issues = ~3-5 seconds total
 * **Projected Timeline:** 15+ second execution time in ~10-12 months at current issue creation rate (~0.4 issues/day)
 * **Bottleneck:** GitHub web interface pagination, not analysis logic
