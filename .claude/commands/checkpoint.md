@@ -17,6 +17,22 @@ Follow the following process to create a project checkpoint.
 ## Process
 Create a todo list for these steps and mark them off as accomplished. Do these steps in order. If a step has an error or fails, summarize what has been completed and ask the user how to proceed with specific options for resolution. You can skip a step when no meaningful changes are needed.
 
+**Error Handling Protocol:**
+If any step has an error or fails, immediately:
+1. **Halt progression** - Do not continue to subsequent steps
+2. **Status report** - Clearly summarize what was completed successfully
+3. **Problem identification** - Explain what specifically failed and why
+4. **Present options** - Offer specific, actionable choices:
+   - Retry the failed step after addressing the issue
+   - Skip the failed step with clear warnings about consequences
+   - Modify the approach (alternative method)
+   - Abort the checkpoint and preserve current state
+   - Request manual user intervention
+5. **Wait for explicit user decision** - Never assume or default to any action
+6. **Document the resolution** - Note what the user chose for future reference
+
+**Critical Rule:** Git failures in step 6 are considered checkpoint-critical errors. The process must not silently fail or proceed with incomplete commits.
+
 **Orchestration Safeguards:** This command includes automatic loop prevention for agent chaining. Critic-refiner cycles are limited to 2 iterations maximum. If quality targets aren't met within these limits, the command will present options to either accept current quality or manually intervene.
 
 1. **Compact Claude Conversation Context.** Use Claude Code's conversation compacting feature on current conversation, paying particular attention to maintain clarity, consistency, and meaning of the current conversation.
@@ -34,7 +50,54 @@ Create a todo list for these steps and mark them off as accomplished. Do these s
 
 5. **Update README.md.** Update README.md to reflect current project description. Remember this file is optimized for the senior AI engineer who's looking to quickly onboard and understand the project. Be concise, clear, complete, and accurate. Check for internal logical and semantic consistency. Include information text, document links, web references, and pictures/diagrams (png format). Check for broken links. Ask the user to resolve any ambiguity. When merging with existing README.md content: preserve valuable information that remains relevant, retain next steps and insights unless obviated by recent changes, and maintain consistent formatting throughout. Use critic and refiner agents to achieve at least B+ quality, with automatic acceptance if refinement cycles exceed limit.
 
-6. **Stage and Commit.** On success, stage and commit recent changes with an appropriate message.
+6. **Stage and Commit.** Stage and commit recent changes with comprehensive error handling:
+
+   **Pre-staging Verification:**
+   - Ensure you're working from the git repository root directory
+   - Identify expected changed files from this checkpoint:
+     * `.claude/commands/checkpoint.md` (if modified)
+     * `CLAUDE.md` (project memory updates)
+     * `README.md` (documentation updates)
+     * New conversation file from step 2 in `ai_docs/claude conversations/`
+   - Check current git status to confirm these files show as modified/untracked
+
+   **Staging Process:**
+   - Stage all repository changes using appropriate git command
+   - Immediately verify what was actually staged
+   - Compare staged files against expected files list
+   - **If any expected files are missing from staging:**
+     * **STOP the checkpoint process**
+     * Report which files were expected vs. actually staged
+     * Ask user: "Git staging incomplete. How would you like to proceed?"
+       - A) Investigate and retry staging
+       - B) Manually stage specific files
+       - C) Continue without committing (risky)
+       - D) Abort checkpoint entirely
+
+   **Commit Process:**
+   - Attempt to commit staged changes with descriptive message
+   - **If commit fails for any reason:**
+     * **STOP the checkpoint process**
+     * Report the specific git error message
+     * Ask user: "Git commit failed. How would you like to proceed?"
+       - A) Fix the underlying issue and retry commit
+       - B) Skip commit step and continue to summary (changes remain staged)
+       - C) Unstage changes and abort checkpoint
+       - D) Request manual intervention for git operations
+
+   **Success Verification:**
+   - Confirm commit was created successfully
+   - Verify working directory is clean (no uncommitted changes)
+   - **Only proceed to step 7 if:**
+     * Commit succeeded completely, OR
+     * User explicitly chose to continue despite git issues
+
+   **Failure Recovery:**
+   - If step 6 cannot complete successfully, follow the checkpoint command's error protocol:
+     * Summarize what steps were completed (1-5)
+     * Clearly state that git operations failed
+     * Preserve all file changes in their current state
+     * Ask user for guidance on how to proceed
 
 7. **Summarize Checkpoint.** Make a concise summary of what was done for this particular checkpoint command execution. Call out any particular strengths or opportunities for improvement to this checkpoint command based on the outcome from the current execution.
 
